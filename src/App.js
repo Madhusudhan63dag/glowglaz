@@ -23,10 +23,25 @@ function ScrollHandler() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get('section') === 'products') {
-      const element = document.getElementById('products');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      // Add a longer delay for mobile devices
+      setTimeout(() => {
+        const element = document.getElementById('products');
+        if (element) {
+          // Check if running on mobile
+          const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          
+          if (isMobile) {
+            // For mobile, use window.scrollTo with offset for navbar
+            const offset = element.offsetTop - 60; // Adjust offset as needed
+            window.scrollTo({
+              top: offset,
+              behavior: 'smooth'
+            });
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }, 500); // Increased delay for better reliability
     }
   }, [location]);
 

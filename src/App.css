@@ -44,7 +44,20 @@
 }
 
 /* Add mobile menu transition */
-.mobile-menu-enter {
+.mobile-menu-enter {html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px; /* Adjust based on your navbar height */
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 60px; /* Mobile navbar height */
+  }
+}
+
+section {
+  scroll-margin-top: 60px;
+}
   max-height: 0;
   opacity: 0;
 }

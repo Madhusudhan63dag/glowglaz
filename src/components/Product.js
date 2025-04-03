@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useScrollToElement } from '../hooks/useScrolling';
 import lotion from '../assets/lotion/one.png';
 import bodyWash from '../assets/wash/one.png';
 import oil from '../assets/oil/one.png';
@@ -7,6 +9,12 @@ import { useCart } from '../context/CartContext';
 const Product = () => {
   const { addToCart } = useCart();
   const productRef = useRef(null);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const shouldScrollToProducts = params.get('section') === 'products';
+
+  // Use the custom hook
+  useScrollToElement('products', shouldScrollToProducts);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -75,7 +83,7 @@ const Product = () => {
 
   return (
     <section 
-      className="py-20 bg-gradient-to-b from-gray-50 to-white" 
+      className="py-20 bg-gradient-to-b from-gray-50 to-white scroll-mt-16" 
       id="products"
       ref={productRef}
     >
