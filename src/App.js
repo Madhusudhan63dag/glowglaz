@@ -8,6 +8,7 @@ import Product from './components/Product';
 import Benfit from './components/Benfit';
 import Testimonial from './components/Testimonial';
 import Faq from './components/Faq';
+import ContactUs from './components/ContactUs';
 import Checkout from './components/Checkout';
 import Footer from './components/Footer';
 import Privacy from './pages/Privacy';
@@ -15,6 +16,22 @@ import Terms from './pages/Terms';
 import Shipping from './pages/Shipping';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
+
+function ScrollHandler() {
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('section') === 'products') {
+      const element = document.getElementById('products');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
+
+  return null;
+}
 
 function App() {
   const [navbarVisible, setNavbarVisible] = useState(false);
@@ -34,6 +51,7 @@ function App() {
     <CartProvider>
       <BrowserRouter>
         <ScrollToTop /> {/* This handles scrolling to top on page changes */}
+        <ScrollHandler /> {/* Add this new component inside the Router */}
         <SectionScroller /> {/* Add this new component inside the Router */}
         <div className={`App ${navbarVisible ? 'navbar-visible' : ''}`}>
           <Navbar />
@@ -50,6 +68,7 @@ function App() {
                 <Testimonial />
                 <Faq />
                 <Checkout />
+                <ContactUs />
               </>
             } />
             

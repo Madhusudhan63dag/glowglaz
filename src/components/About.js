@@ -1,6 +1,6 @@
 import React from 'react';
-import about from '../assets/about.jpg'
-import about2 from '../assets/about2.jpg'
+import about2 from '../assets/about.png'
+import about from '../assets/about2.jpg'
 
 const About = () => {
   // Key points about why to use the product

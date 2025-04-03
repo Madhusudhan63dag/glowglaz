@@ -25,11 +25,11 @@ const Testimonial = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Priya Sharma",
+      name: "Vikrant Sharma",
       position: "Psoriasis Patient for 10 years",
       image: test1,
       stars: 5,
-      review: "As someone who has tried numerous Ayurvedic remedies for my psoriasis, PSORIGO's Body Lotion has been truly transformative. The blend of traditional herbs with modern formulation has reduced my scaling significantly. I'm finally comfortable wearing traditional Indian outfits again without worrying about my skin condition.",
+      review: "As someone who has tried numerous Ayurvedic remedies for my psoriasis, PSORIGO's Body Lotion has been truly transformative. The blend of traditional herbs with modern formulation has reduced my scaling significantly. I'm finally comfortable wearing short sleeves again without worrying about my skin condition.",
       productImage: product1
     },
     {
@@ -43,7 +43,7 @@ const Testimonial = () => {
     },
     {
       id: 3,
-      name: "Dr. Anjali Desai",
+      name: "Dr. Anil Desai",
       position: "Ayurvedic Practitioner",
       image: test3,
       stars: 4,

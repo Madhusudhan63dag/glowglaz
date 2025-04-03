@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import lotion from '../assets/lotion/one.png';
 import bodyWash from '../assets/wash/one.png';
 import oil from '../assets/oil/one.png';
@@ -6,6 +6,29 @@ import { useCart } from '../context/CartContext';
 
 const Product = () => {
   const { addToCart } = useCart();
+  const productRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Optional: Add analytics tracking when products section is viewed
+          console.log('Products section viewed');
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (productRef.current) {
+      observer.observe(productRef.current);
+    }
+
+    return () => {
+      if (productRef.current) {
+        observer.unobserve(productRef.current);
+      }
+    };
+  }, []);
 
   const products = [
     {
@@ -51,7 +74,11 @@ const Product = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white" id="products">
+    <section 
+      className="py-20 bg-gradient-to-b from-gray-50 to-white" 
+      id="products"
+      ref={productRef}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-playfair font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-brand-green to-bluegray">Our Premium Products</h2>

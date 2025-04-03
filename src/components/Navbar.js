@@ -106,9 +106,10 @@ function Navbar() {
             <li><a onClick={() => navigate('/')} className="text-taupe hover:text-brand-green font-medium cursor-pointer">Home</a></li>
             <li><a onClick={() => handleNavigation('about')} className="text-taupe hover:text-brand-green font-medium cursor-pointer">About</a></li>
             <li><a onClick={() => handleNavigation('products')} className="text-taupe hover:text-brand-green font-medium cursor-pointer">Shop</a></li>
-            <li><a onClick={() => handleNavigation('checkout')} className="text-taupe hover:text-brand-green font-medium cursor-pointer">Checkout</a></li>
+            <li><a onClick={() => handleNavigation('contact')} className="text-taupe hover:text-brand-green font-medium cursor-pointer">Contact</a></li>
             <li><a onClick={() => handleNavigation('faq')} className="text-taupe hover:text-brand-green font-medium cursor-pointer">FAQ</a></li>
             <li><a onClick={() => handleNavigation('testimonials')} className="text-taupe hover:text-brand-green font-medium cursor-pointer">Testimonials</a></li>
+            <li><a onClick={() => handleNavigation('checkout')} className="text-taupe hover:text-brand-green font-medium cursor-pointer">Checkout</a></li>
           </ul>
         </div>
         
@@ -155,6 +156,14 @@ function Navbar() {
                 className="block py-3 px-4 text-taupe hover:text-brand-green hover:bg-gray-50 active:bg-gray-100 transition-colors font-medium cursor-pointer"
               >
                 Shop
+              </a>
+            </li>
+            <li className="border-b border-gray-100">
+              <a 
+                onClick={() => handleNavigation('contact')}
+                className="block py-3 px-4 text-taupe hover:text-brand-green hover:bg-gray-50 active:bg-gray-100 transition-colors font-medium cursor-pointer"
+              >
+                Contact
               </a>
             </li>
             <li className="border-b border-gray-100">
