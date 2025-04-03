@@ -15,3 +15,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Add these styles to handle mobile scroll behavior */
+html {
+  scroll-padding-top: 60px; /* Adjust to match your navbar height */
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto !important; /* Force default scroll on mobile */
+  }
+  
+  section[id] {
+    scroll-margin-top: 60px;
+  }
+}

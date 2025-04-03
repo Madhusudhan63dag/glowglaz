@@ -9,18 +9,38 @@ export const useScrollToElement = (elementId, trigger) => {
       if (!element) return;
 
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      const offset = isMobile ? 60 : 0; // Adjust offset for mobile
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      const navbarHeight = 60; // Adjust this to match your navbar height
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      if (isMobile) {
+        // Force immediate scroll for mobile
+        window.scrollTo({
+          top: element.offsetTop - navbarHeight,
+          behavior: 'auto' // Use 'auto' instead of 'smooth' for more reliable mobile scrolling
+        });
+
+        // Double-check scroll position after a short delay
+        setTimeout(() => {
+          if (window.pageYOffset !== element.offsetTop - navbarHeight) {
+            window.scrollTo({
+              top: element.offsetTop - navbarHeight,
+              behavior: 'auto'
+            });
+          }
+        }, 100);
+      } else {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     };
 
-    // Delay scroll to ensure page is fully loaded
-    const timeoutId = setTimeout(scrollToElement, 500);
-    return () => clearTimeout(timeoutId);
+    // Initial scroll attempt
+    scrollToElement();
+
+    // Retry scrolling a few times to ensure it works
+    const retryAttempts = [100, 300, 500, 1000];
+    retryAttempts.forEach(delay => {
+      const timeoutId = setTimeout(scrollToElement, delay);
+      return () => clearTimeout(timeoutId);
+    });
+
   }, [elementId, trigger]);
 };

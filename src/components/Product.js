@@ -13,7 +13,7 @@ const Product = () => {
   const params = new URLSearchParams(location.search);
   const shouldScrollToProducts = params.get('section') === 'products';
 
-  // Use the custom hook
+  // Use the hook with immediate trigger
   useScrollToElement('products', shouldScrollToProducts);
 
   useEffect(() => {
@@ -83,8 +83,9 @@ const Product = () => {
 
   return (
     <section 
-      className="py-20 bg-gradient-to-b from-gray-50 to-white scroll-mt-16" 
+      className="py-20 bg-gradient-to-b from-gray-50 to-white" 
       id="products"
+      style={{ scrollMarginTop: '60px' }} // Add inline scroll margin
       ref={productRef}
     >
       <div className="container mx-auto px-4">
