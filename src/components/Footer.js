@@ -38,31 +38,36 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {/* Brand column */}
-          <div>
-            <div className="mb-6">
-              <img src={logo} alt="PSORIGO" className="h-16" />
-            </div>
-            <p className="text-gray-600 mb-6">
-              Natural Ayurvedic solutions for psoriasis relief, combining ancient wisdom with modern science.
-            </p>
-            <div className="flex space-x-4">
-              
-              <a href=" https://www.instagram.com/glowglaz06/" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-green hover:bg-brand-green hover:text-white transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 2.163c-3.151 0-3.501.014-4.735.069-2.275.104-3.322 1.156-3.427 3.428-.055 1.233-.069 1.584-.069 4.735s.014 3.502.069 4.735c.105 2.272 1.152 3.322 3.427 3.428 1.234.055 1.584.069 4.735.069s3.501-.014 4.734-.069c2.272-.105 3.322-1.155 3.428-3.428.055-1.233.069-1.583.069-4.735s-.014-3.502-.069-4.735c-.105-2.272-1.156-3.322-3.428-3.427-1.233-.056-1.583-.07-4.734-.07zm0 3.643c-3.315 0-6 2.685-6 6s2.685 6 6 6 6-2.685 6-6-2.685-6-6-6zm0 9.894c-2.15 0-3.894-1.744-3.894-3.894s1.744-3.894 3.894-3.894 3.894 1.744 3.894 3.894-1.744 3.894-3.894 3.894zm7.639-10.157c-.775 0-1.404.629-1.404 1.404s.629 1.404 1.404 1.404 1.404-.629 1.404-1.404-.629-1.404-1.404-1.404z"/>
-                </svg>
-              </a>
-              
-              <a href="https://www.youtube.com/@glowglaz" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-green hover:bg-brand-green hover:text-white transition-colors">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-          
-          {/* Quick links */}
+                <div>
+                <div className="mb-6">
+                  <img src={logo} alt="PSORIGO" className="h-16" />
+                </div>
+                <p className="text-gray-600 mb-6">
+                  Natural Ayurvedic solutions for psoriasis relief, combining ancient wisdom with modern science.
+                </p>
+                <div className="flex space-x-4">
+                  
+                  <a href="https://www.instagram.com/glowglazofficial/" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-green hover:bg-brand-green hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0 2.163c-3.151 0-3.501.014-4.735.069-2.275.104-3.322 1.156-3.427 3.428-.055 1.233-.069 1.584-.069 4.735s.014 3.502.069 4.735c.105 2.272 1.152 3.322 3.427 3.428 1.234.055 1.584.069 4.735.069s3.501-.014 4.734-.069c2.272-.105 3.322-1.155 3.428-3.428.055-1.233.069-1.583.069-4.735s-.014-3.502-.069-4.735c-.105-2.272-1.156-3.322-3.428-3.427-1.233-.056-1.583-.07-4.734-.07zm0 3.643c-3.315 0-6 2.685-6 6s2.685 6 6 6 6-2.685 6-6-2.685-6-6-6zm0 9.894c-2.15 0-3.894-1.744-3.894-3.894s1.744-3.894 3.894-3.894 3.894 1.744 3.894 3.894-1.744 3.894-3.894 3.894zm7.639-10.157c-.775 0-1.404.629-1.404 1.404s.629 1.404 1.404 1.404 1.404-.629 1.404-1.404-.629-1.404-1.404-1.404z"/>
+                  </svg>
+                  </a>
+                  
+                  <a href="https://www.facebook.com/profile.php?id=61574772250708" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-green hover:bg-brand-green hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                  </svg>
+                  </a>
+
+                  <a href="https://www.youtube.com/@glowglaz" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-brand-green hover:bg-brand-green hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                  </svg>
+                  </a>
+                </div>
+                </div>
+                
+                {/* Quick links */}
           <div>
             <h3 className="font-bold text-lg mb-6">Quick Links</h3>
             <ul className="space-y-3">

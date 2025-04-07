@@ -1,6 +1,10 @@
 import React from 'react';
 import about2 from '../assets/about.png'
 import about from '../assets/about2.jpg'
+import about3 from '../assets/about3.jpg'
+import about4 from '../assets/about4.jpg'
+import about5 from '../assets/about5.jpg'
+import about6 from '../assets/about6.jpg'
 
 const About = () => {
   // Key points about why to use the product
@@ -51,10 +55,56 @@ const About = () => {
     { value: "85%", label: "found relief with traditional remedies" }
   ];
 
+  // Psoriasis information
+  const psoriasisInfo = {
+    overview: {
+      title: "Understanding Psoriasis",
+      description: "Psoriasis is a chronic autoimmune condition that causes cells to build up rapidly on the surface of the skin, leading to scaling and inflammation. It affects approximately 2-3% of the global population.",
+      image: about3
+    },
+    types: [
+      {
+        name: "Plaque Psoriasis",
+        description: "The most common form, causing red, inflamed patches with silvery-white scales.",
+        image: about4
+      },
+      {
+        name: "Guttate Psoriasis",
+        description: "Appears as small, drop-shaped lesions on the trunk, limbs, and scalp.",
+        image: about5
+      },
+      {
+        name: "Inverse Psoriasis",
+        description: "Affects skin folds, appearing as smooth, red patches.",
+        image: about6
+      }
+    ],
+    symptoms: [
+      { name: "Dry, cracked skin", severity: "High" },
+      { name: "Itching and burning", severity: "Moderate to High" },
+      { name: "Thickened nails", severity: "Moderate" },
+      { name: "Joint pain", severity: "Varies" },
+      { name: "Inflammatory patches", severity: "High" }
+    ],
+    treatments: {
+      conventional: [
+        "Topical corticosteroids",
+        "Vitamin D analogues",
+        "Phototherapy",
+        "Systemic medications"
+      ],
+      ayurvedic: [
+        "Natural herbs and oils",
+        "Dietary modifications",
+        "Stress management",
+        "Lifestyle changes"
+      ]
+    }
+  };
+
   // Image URLs for different sections
   const images = {
     // Main about section image
-
     aboutImage: about,
 
     // Science behind section image
@@ -97,6 +147,99 @@ const About = () => {
           <p className="text-center text-taupe max-w-3xl mx-auto text-lg font-garamond">
             Our Ayurvedic approach to psoriasis combines ancient wisdom with modern science for effective, gentle relief without harsh chemicals.
           </p>
+        </div>
+
+        {/* Understanding Psoriasis Section */}
+        <div className="mb-20">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <h3 className="text-3xl font-playfair font-bold mb-6 text-gray-800">{psoriasisInfo.overview.title}</h3>
+              <p className="text-gray-600 mb-6 font-garamond text-lg leading-relaxed">
+                {psoriasisInfo.overview.description}
+              </p>
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h4 className="font-bold text-lg mb-4 text-brand-green">Common Symptoms</h4>
+                <div className="space-y-3">
+                  {psoriasisInfo.symptoms.map((symptom, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <span className="text-gray-700">{symptom.name}</span>
+                      <span className={`px-3 py-1 rounded-full text-sm ${
+                        symptom.severity === 'High' 
+                          ? 'bg-red-100 text-red-800' 
+                          : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {symptom.severity}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <img
+                src={psoriasisInfo.overview.image}
+                alt="Understanding Psoriasis"
+                className="rounded-xl shadow-xl w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Types of Psoriasis */}
+        <div className="mb-20">
+          <h3 className="text-3xl font-playfair font-bold mb-10 text-center">Types of Psoriasis</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {psoriasisInfo.types.map((type, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={type.image}
+                    alt={type.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h4 className="text-xl font-bold mb-3 text-gray-800">{type.name}</h4>
+                  <p className="text-gray-600">{type.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Treatment Comparison */}
+        <div className="mb-20">
+          <div className="bg-white rounded-xl shadow-lg p-8">
+            <h3 className="text-3xl font-playfair font-bold mb-8 text-center">Treatment Approaches</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="border-r border-gray-200 pr-8">
+                <h4 className="text-xl font-bold mb-4 text-gray-800">Conventional Treatment</h4>
+                <ul className="space-y-3">
+                  {psoriasisInfo.treatments.conventional.map((treatment, index) => (
+                    <li key={index} className="flex items-center text-gray-600">
+                      <svg className="w-5 h-5 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {treatment}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="pl-8">
+                <h4 className="text-xl font-bold mb-4 text-gray-800">Ayurvedic Approach</h4>
+                <ul className="space-y-3">
+                  {psoriasisInfo.treatments.ayurvedic.map((treatment, index) => (
+                    <li key={index} className="flex items-center text-gray-600">
+                      <svg className="w-5 h-5 mr-3 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {treatment}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* About Section with Image */}

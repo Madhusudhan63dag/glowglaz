@@ -16,6 +16,7 @@ import Terms from './pages/Terms';
 import Shipping from './pages/Shipping';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
+import Usage from './components/Usage';
 
 function ScrollHandler() {
   const location = useLocation();
@@ -80,6 +81,7 @@ function App() {
                 <About />
                 <Product />
                 <Benfit />
+                <Usage />
                 <Testimonial />
                 <Faq />
                 <Checkout />
