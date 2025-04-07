@@ -185,6 +185,80 @@ const Usage = () => {
             </div>
           </div>
         </div>
+
+        {/* Treatment Approaches Section */}
+        <div className="mt-12">
+          <div className="bg-white rounded-xl shadow-md p-8">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">Treatment Approaches with PSORIGO Products</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="border-r border-gray-200 pr-8">
+                <h4 className="text-xl font-bold mb-4 text-gray-800">Daily Maintenance</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-center text-gray-600">
+                    <svg className="w-5 h-5 mr-3 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Morning: PSORIGO Body Wash followed by Body Lotion
+                  </li>
+                  <li className="flex items-center text-gray-600">
+                    <svg className="w-5 h-5 mr-3 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Evening: Gentle cleansing with Body Wash
+                  </li>
+                  <li className="flex items-center text-gray-600">
+                    <svg className="w-5 h-5 mr-3 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Night: PSORIGO Oil treatment before bed
+                  </li>
+                </ul>
+              </div>
+              <div className="pl-8">
+                <h4 className="text-xl font-bold mb-4 text-gray-800">For Flare-ups</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-center text-gray-600">
+                    <svg className="w-5 h-5 mr-3 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Increase PSORIGO Oil application to twice daily
+                  </li>
+                  <li className="flex items-center text-gray-600">
+                    <svg className="w-5 h-5 mr-3 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Apply Body Lotion more frequently throughout the day
+                  </li>
+                  <li className="flex items-center text-gray-600">
+                    <svg className="w-5 h-5 mr-3 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Extended Body Wash soaking for 2-3 minutes
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Product Combination Tips */}
+            <div className="mt-8 bg-gray-50 rounded-lg p-6">
+              <h4 className="text-lg font-bold mb-4 text-bluegray">Recommended Product Combinations</h4>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="bg-white p-4 rounded-lg shadow-sm">
+                  <h5 className="font-semibold text-brand-green mb-2">Mild Symptoms</h5>
+                  <p className="text-sm text-gray-600">Body Wash + Body Lotion for daily maintenance</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-sm">
+                  <h5 className="font-semibold text-brand-green mb-2">Moderate Symptoms</h5>
+                  <p className="text-sm text-gray-600">All three products with weekly oil treatments</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-sm">
+                  <h5 className="font-semibold text-brand-green mb-2">Severe Symptoms</h5>
+                  <p className="text-sm text-gray-600">Daily use of all products with overnight oil application</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

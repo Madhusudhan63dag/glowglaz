@@ -210,7 +210,7 @@ const About = () => {
         {/* Treatment Comparison */}
         <div className="mb-20">
           <div className="bg-white rounded-xl shadow-lg p-8">
-            <h3 className="text-3xl font-playfair font-bold mb-8 text-center">Treatment Approaches</h3>
+            {/* <h3 className="text-3xl font-playfair font-bold mb-8 text-center">Treatment Approaches</h3>
             <div className="grid md:grid-cols-2 gap-8">
               <div className="border-r border-gray-200 pr-8">
                 <h4 className="text-xl font-bold mb-4 text-gray-800">Conventional Treatment</h4>
@@ -237,6 +237,81 @@ const About = () => {
                     </li>
                   ))}
                 </ul>
+              </div>
+            </div> */}
+
+            {/* Add new Product-Specific Treatment section */}
+            <div className="mt-12 pt-8 border-t border-gray-200">
+              <h4 className="text-2xl font-bold mb-6 text-center">PSORIGO Product-Specific Treatments</h4>
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                  <h5 className="text-xl font-bold text-brand-green mb-4">Body Lotion</h5>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>Daily moisturizing and protection</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>Reduces scaling and redness</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>Fast-absorbing formula</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                  <h5 className="text-xl font-bold text-brand-green mb-4">Body Oil</h5>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>Deep penetration therapy</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>Overnight treatment</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>Scalp and body application</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+                  <h5 className="text-xl font-bold text-brand-green mb-4">Body Wash</h5>
+                  <ul className="space-y-3">
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>Gentle cleansing action</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>pH balanced formula</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="w-2 h-2 mt-2 mr-2 bg-brand-green rounded-full"></span>
+                      <span>Soothes irritated skin</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Product Usage Timeline */}
+              <div className="mt-8 bg-gray-50 rounded-lg p-6">
+                <h5 className="text-lg font-bold mb-4">Recommended Usage Timeline</h5>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h6 className="font-semibold text-brand-green mb-2">Short-Term (1-4 weeks)</h6>
+                    <p className="text-sm text-gray-600">Begin with Body Wash and Lotion daily. Introduce Oil treatment gradually, starting twice weekly.</p>
+                  </div>
+                  <div>
+                    <h6 className="font-semibold text-brand-green mb-2">Long-Term (4+ weeks)</h6>
+                    <p className="text-sm text-gray-600">Full regimen with all products. Adjust Oil treatment frequency based on symptom severity.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -30,7 +30,11 @@ const Footer = () => {
     upi: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/UPI-Logo-vector.svg/1200px-UPI-Logo-vector.svg.png",
     visa: "https://cdn.worldvectorlogo.com/logos/visa.svg",
     mastercard: "https://cdn.worldvectorlogo.com/logos/mastercard-2.svg",
-    amex: "https://cdn.worldvectorlogo.com/logos/american-express-1.svg"
+    amex: "https://cdn.worldvectorlogo.com/logos/american-express-1.svg",
+    rupay: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Rupay-Logo.png/1200px-Rupay-Logo.png",
+    paytm: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Paytm_Logo_%28standalone%29.svg/2560px-Paytm_Logo_%28standalone%29.svg.png",
+    phonepe: "https://download.logo.wine/logo/PhonePe/PhonePe-Logo.wine.png",
+    bhim: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/BHIM_logo.svg/2560px-BHIM_logo.svg.png"
   };
 
   return (
@@ -151,96 +155,101 @@ const Footer = () => {
               <Link to="/shipping" className="text-gray-500 hover:text-brand-green transition-colors">Shipping Policy</Link>
             </div>
             
-            {/* Payment methods with updated images */}
+            {/* Payment methods section */}
             <div className="flex flex-col items-center mt-8 md:mt-0">
-              <p className="text-sm text-gray-500 mb-3">Payment Methods</p>
-              <div className="flex items-center space-x-4 bg-white p-3 rounded-lg shadow-sm">
-                {/* Razorpay with fallback */}
-                <div className="h-8 flex items-center">
-                  {!imgErrors.razorpay ? (
+              <p className="text-sm text-gray-500 mb-3">Secure Payment Options</p>
+              <div className="bg-white p-6 rounded-lg shadow-sm">
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-6 items-center justify-items-center">
+                  {/* Razorpay */}
+                  <div className="w-20 h-8 flex items-center justify-center">
                     <img 
                       src={paymentImages.razorpay} 
                       alt="Razorpay" 
-                      className="h-6 object-contain"
-                      onError={() => handleImageError('razorpay')}
+                      className="max-h-6 w-auto object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
                     />
-                  ) : (
-                    <div className="bg-blue-50 px-3 py-1 rounded-md border border-gray-200">
-                      <span className="font-semibold text-blue-600">Razorpay</span>
-                    </div>
-                  )}
-                </div>
-                
-                {/* UPI with fallback */}
-                <div className="h-8 flex items-center">
-                  {!imgErrors.upi ? (
-                    <img 
-                      src={paymentImages.upi}
-                      alt="UPI" 
-                      className="h-6 object-contain" 
-                      onError={() => handleImageError('upi')}
-                    />
-                  ) : (
-                    <div className="bg-green-50 px-3 py-1 rounded-md border border-gray-200">
-                      <span className="font-semibold text-green-600">UPI</span>
-                    </div>
-                  )}
-                </div>
-                
-                {/* Cash on Delivery (text-based, doesn't need image error handling) */}
-                <div className="h-8 flex items-center bg-white px-3 py-1 rounded-md border border-gray-200">
-                  <div className="flex items-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-amber-600 mr-2">
-                      <path d="M12 6v12m-8-6h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="currentColor" strokeWidth="2"/>
-                    </svg>
-                    <span className="font-medium text-gray-700 text-xs">COD</span>
                   </div>
-                </div>
-                
-                {/* Credit/Debit Cards with fallbacks */}
-                <div className="flex items-center space-x-3">
+                  
+                  {/* Paytm */}
+                  <div className="w-20 h-8 flex items-center justify-center">
+                    <img 
+                      src={paymentImages.paytm} 
+                      alt="Paytm" 
+                      className="max-h-6 w-auto object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  </div>
+                  
+                  {/* PhonePe */}
+                  <div className="w-20 h-8 flex items-center justify-center">
+                    <img 
+                      src={paymentImages.phonepe} 
+                      alt="PhonePe" 
+                      className="max-h-6 w-auto object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  </div>
+                  
                   {/* Visa */}
-                  {!imgErrors.visa ? (
+                  <div className="w-20 h-8 flex items-center justify-center">
                     <img 
                       src={paymentImages.visa} 
-                      alt="Visa"
-                      className="h-6 object-contain" 
-                      onError={() => handleImageError('visa')}
+                      alt="Visa" 
+                      className="max-h-5 w-auto object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
                     />
-                  ) : (
-                    <div className="bg-gray-50 px-2 py-1 rounded text-xs font-medium text-gray-600 border border-gray-200">
-                      Visa
-                    </div>
-                  )}
+                  </div>
                   
                   {/* Mastercard */}
-                  {!imgErrors.mastercard ? (
+                  <div className="w-20 h-8 flex items-center justify-center">
                     <img 
-                      src={paymentImages.mastercard}
-                      alt="Mastercard"
-                      className="h-6 object-contain" 
-                      onError={() => handleImageError('mastercard')}
+                      src={paymentImages.mastercard} 
+                      alt="Mastercard" 
+                      className="max-h-5 w-auto object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
                     />
-                  ) : (
-                    <div className="bg-gray-50 px-2 py-1 rounded text-xs font-medium text-gray-600 border border-gray-200">
-                      Mastercard
-                    </div>
-                  )}
+                  </div>
                   
-                  {/* American Express */}
-                  {!imgErrors.amex ? (
+                  {/* RuPay */}
+                  <div className="w-20 h-8 flex items-center justify-center">
                     <img 
-                      src={paymentImages.amex}
-                      alt="American Express"
-                      className="h-6 object-contain" 
-                      onError={() => handleImageError('amex')}
+                      src={paymentImages.rupay} 
+                      alt="RuPay" 
+                      className="max-h-5 w-auto object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
                     />
-                  ) : (
-                    <div className="bg-gray-50 px-2 py-1 rounded text-xs font-medium text-gray-600 border border-gray-200">
-                      Amex
+                  </div>
+                  
+                  {/* UPI */}
+                  <div className="w-20 h-8 flex items-center justify-center">
+                    <img 
+                      src={paymentImages.upi} 
+                      alt="UPI" 
+                      className="max-h-6 w-auto object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  </div>
+                  
+                  {/* BHIM */}
+                  <div className="w-20 h-8 flex items-center justify-center">
+                    <img 
+                      src={paymentImages.bhim} 
+                      alt="BHIM" 
+                      className="max-h-5 w-auto object-contain"
+                      onError={(e) => e.target.style.display = 'none'}
+                    />
+                  </div>
+                  
+                  {/* COD Option */}
+                  <div className="w-20 h-8 flex items-center justify-center">
+                    <div className="flex items-center bg-gray-50 px-2 py-1.5 rounded-md border border-gray-200">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-amber-600 mr-1">
+                        <path d="M12 6v12m-8-6h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="currentColor" strokeWidth="2"/>
+                      </svg>
+                      <span className="font-medium text-gray-700 text-xs">COD</span>
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>
