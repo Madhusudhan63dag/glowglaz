@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import axios from 'axios';
 
-const API_URL = 'https://razorpaybackend-wgbh.onrender.com';
+const API_URL = 'http://localhost:5000';//https://razorpaybackend-wgbh.onrender.com 
 
 const paymentImages = {
   razorpay: "https://cdn.razorpay.com/static/assets/logo/razorpay-logo.svg",
@@ -156,11 +156,12 @@ const Checkout = () => {
         throw new Error('Payment verification failed');
       }
       
-      // Set order ID for reference
-      setOrderId(paymentResponse.razorpay_order_id);
+      // Set order ID for reference BEFORE sending email
+      const currentOrderId = paymentResponse.razorpay_order_id;
+      setOrderId(currentOrderId);
       
-      // Send order confirmation email
-      await sendOrderConfirmationEmail(paymentResponse.razorpay_payment_id);
+      // Send order confirmation email with current order ID
+      await sendOrderConfirmationEmail(paymentResponse.razorpay_payment_id, currentOrderId);
       
       // Show success message
       setToast({
@@ -188,10 +189,11 @@ const Checkout = () => {
   };
 
   // Send order confirmation email
-  const sendOrderConfirmationEmail = async (paymentId) => {
+  const sendOrderConfirmationEmail = async (paymentId, currentOrderId) => {
     try {
+      // Use the provided order ID or generate one if not available
       const orderDetails = {
-        orderNumber: orderId || `ORD-${Date.now()}`,
+        orderNumber: currentOrderId || orderId || `ORD-${Date.now()}`,
         productName: cartItems.map(item => item.name).join(', '),
         quantity: cartItems.reduce((sum, item) => sum + item.quantity, 0),
         totalAmount: total.toFixed(2),
@@ -200,23 +202,39 @@ const Checkout = () => {
         paymentId: paymentId || 'COD'
       };
       
+      // Format the address to include all details - since backend template has limited fields
+      // Combine address components into a single string to ensure all details appear in email
+      const formattedAddress = `${formData.address}${formData.address ? ', ' : ''}${formData.city ? formData.city : ''}${formData.state ? ', ' + formData.state : ''}${formData.zip ? ' - ' + formData.zip : ''}`;
+      
       const customerDetails = {
-        firstName: formData.name.split(' ')[0],
-        lastName: formData.name.split(' ').slice(1).join(' '),
+        firstName: formData.name.split(' ')[0] || '',
+        lastName: formData.name.split(' ').slice(1).join(' ') || '',
         email: formData.email,
         phone: formData.phone,
-        address: formData.address,
+        // Put all address details in the main address field since that's what shows in email
+        address: formattedAddress,
+        // Keep apartment empty since we've included everything in address
+        apartment: '',
+        // Keep these fields for backend compatibility
         city: formData.city,
         state: formData.state,
         country: 'India',
         zip: formData.zip
       };
       
-      await axios.post(`${API_URL}/send-order-confirmation`, {
+      console.log('Sending order confirmation with details:', {
         customerEmail: formData.email,
         orderDetails,
         customerDetails
       });
+      
+      const response = await axios.post(`${API_URL}/send-order-confirmation`, {
+        customerEmail: formData.email,
+        orderDetails,
+        customerDetails
+      });
+      
+      console.log('Email API response:', response.data);
       
     } catch (error) {
       console.error('Error sending order confirmation email:', error);
@@ -285,8 +303,8 @@ const Checkout = () => {
       const codOrderId = `COD-${Date.now()}`;
       setOrderId(codOrderId);
       
-      // Send order confirmation email
-      await sendOrderConfirmationEmail();
+      // Send order confirmation email with the generated order ID
+      await sendOrderConfirmationEmail(null, codOrderId);
       
       // Show success message
       setToast({
