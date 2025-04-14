@@ -78,13 +78,13 @@ function App() {
             <Route path="/" element={
               <>
                 <Hero />
-                <About />
                 <Product />
+                <Checkout />
+                <About />
                 <Benfit />
                 <Usage />
                 <Testimonial />
                 <Faq />
-                <Checkout />
                 <ContactUs />
               </>
             } />

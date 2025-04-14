@@ -106,7 +106,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative h-[40vh] sm:h-[60vh] md:h-[80vh] lg:h-screen w-full overflow-hidden">
+    <div className="relative h-[23vh] sm:h-[40vh] md:h-[65vh] lg:h-[75vh] xl:h-[80vh] w-full overflow-hidden">
       {/* Image slider */}
       {banners.map((banner, index) => (
         <div 
@@ -118,21 +118,20 @@ const Hero = () => {
           <img 
             src={banner.image} 
             alt={`Slide ${index + 1}`} 
-            className="w-full h-full object-cover md:object-center"
+            className="w-full h-full object-cover"
             style={{ 
-              objectPosition: 'center 25%', // Adjusted focal point for mobile
-              objectFit: 'cover' 
+              objectPosition: 'center 25%'
             }}
           />
           
-          {/* Dark overlay - darker on mobile for better text visibility */}
-          <div className={`absolute inset-0 bg-gradient-to-r ${banner.styles.overlayColor} md:opacity-100 opacity-95`}></div>
+          {/* Dark overlay - improved opacity for better text visibility */}
+          <div className={`absolute inset-0 bg-gradient-to-r ${banner.styles.overlayColor} opacity-90`}></div>
         </div>
       ))}
 
-      {/* Content overlay - moved up for better visibility on small screens */}
+      {/* Content overlay - improved positioning for all screen sizes */}
       <div 
-        className={`absolute top-0 ${currentBanner.styles.containerPosition} ${currentBanner.styles.containerWidth} h-full flex ${getContentAlignmentClasses(currentBanner.styles.position)} z-20 px-4 pt-4 sm:pt-6 md:pt-8 md:p-12`}
+        className={`absolute top-0 ${currentBanner.styles.containerPosition} ${currentBanner.styles.containerWidth} h-full flex ${getContentAlignmentClasses(currentBanner.styles.position)} z-20 px-4 pt-2 sm:pt-4 md:pt-6 lg:pt-8 md:p-12`}
       >
         <div className={`${getTextAlignmentClass(currentBanner.styles.textAlign)} max-w-full md:max-w-lg`}>
           <h1 className={`${currentBanner.styles.headingSize} ${currentBanner.styles.headingColor} mb-1 md:mb-4 transition-all duration-500`}>
