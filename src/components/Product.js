@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useScrollToElement } from '../hooks/useScrolling';
 import lotion from '../assets/lotion/one.png';
 import bodyWash from '../assets/wash/one.png';
@@ -11,11 +11,27 @@ const Product = () => {
   const { addToCart } = useCart();
   const productRef = useRef(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const shouldScrollToProducts = params.get('section') === 'products';
+  
+  // Add state for notification
+  const [showNotification, setShowNotification] = useState(false);
+  const [addedProduct, setAddedProduct] = useState(null);
 
   // Use the hook with immediate trigger
   useScrollToElement('products', shouldScrollToProducts);
+
+  // Hide notification after delay
+  useEffect(() => {
+    if (showNotification) {
+      const timer = setTimeout(() => {
+        setShowNotification(false);
+      }, 4000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showNotification]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -80,15 +96,80 @@ const Product = () => {
       price: product.price,
       image: product.image
     });
+    
+    // Set the added product and show notification
+    setAddedProduct(product);
+    setShowNotification(true);
+  };
+
+  // Function to navigate to checkout
+  const handleGoToCheckout = () => {
+    setShowNotification(false);
+    navigate('/', { state: { scrollTo: 'checkout' } });
   };
 
   return (
     <section 
-      className="py-20 bg-gradient-to-b from-gray-50 to-white" 
+      className="py-20 bg-gradient-to-b from-gray-50 to-white relative" 
       id="products"
-      style={{ scrollMarginTop: '60px' }} // Add inline scroll margin
+      style={{ scrollMarginTop: '60px' }}
       ref={productRef}
     >
+      {/* Cart Notification Popup */}
+      {showNotification && addedProduct && (
+        <div className="fixed inset-x-0 top-24 mx-auto z-50 max-w-md px-4 animate-fade-slide-down">
+          <div className="bg-white rounded-xl shadow-2xl overflow-hidden border border-green-100 transform transition-all">
+            <div className="h-2 bg-gradient-to-r from-brand-green to-bluegray"></div>
+            <div className="p-6">
+              <div className="flex items-start">
+                {/* Product Image */}
+                <div className="flex-shrink-0 mr-4">
+                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-50">
+                    <img 
+                      src={addedProduct.image} 
+                      alt={addedProduct.name} 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="flex-1">
+                  <div className="flex justify-between items-start">
+                    <h3 className="text-lg font-semibold text-gray-800">{addedProduct.name} added to cart!</h3>
+                    <button 
+                      onClick={() => setShowNotification(false)}
+                      className="text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <p className="text-gray-600 mt-1">You're one step away from healthier skin!</p>
+                  
+                  <div className="mt-4 flex space-x-3">
+                    <button 
+                      onClick={handleGoToCheckout}
+                      className="flex-1 px-4 py-2 bg-gradient-to-r from-brand-green to-bluegray text-white text-sm font-medium rounded-lg hover:from-brand-green hover:to-bluegray-light transition-all shadow-sm"
+                    >
+                      Checkout Now
+                    </button>
+                    <button 
+                      onClick={() => setShowNotification(false)}
+                      className="px-4 py-2 border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      Continue Shopping
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl font-playfair font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-brand-green to-bluegray">Our Premium Products</h2>
@@ -192,68 +273,6 @@ const Product = () => {
           <div className="flex flex-col lg:flex-row items-center gap-8">
             {/* Instagram-sized image for the offer */}
             <div className="w-full lg:w-1/3 aspect-square bg-white rounded-xl shadow-lg overflow-hidden relative">
-              {/* <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-brand-green/10 to-bluegray/10 z-0"></div>
-              
-              <div className="absolute top-5 left-5 right-5 flex justify-between items-start">
-                <div className="bg-brand-green text-white text-sm font-bold px-4 py-2 rounded-full">
-                  SPECIAL BUNDLE
-                </div>
-                <div className="bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-full">
-                  SAVE ₹1,898
-                </div>
-              </div>
-              
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center z-10">
-                <h4 className="text-2xl font-bold text-gray-800 mb-2">All 3 Products Bundle</h4>
-                
-                <div className="flex items-center justify-center mb-4">
-                  <div className="relative">
-                    <span className="text-3xl font-bold text-brand-green">₹3,599</span>
-                    <div className="absolute -top-4 right-0 transform translate-x-full">
-                      <span className="text-sm font-normal text-gray-500 line-through">₹4,497</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <p className="text-gray-600 mb-6">Get the complete psoriasis care system at a special bundle price!</p>
-                
-                <div className="flex justify-center space-x-4 mb-6">
-                  {products.map((product, idx) => (
-                    <div key={idx} className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white shadow-md overflow-hidden border-2 border-gray-100">
-                      <img 
-                        src={product.image} 
-                        alt={product.name} 
-                        className="w-full h-full object-contain p-2"
-                        width={80}
-                        height={80}
-                      />
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 w-full">
-                  <ul className="text-sm text-left space-y-2 mb-4">
-                    <li className="flex items-center">
-                      <svg className="h-4 w-4 text-brand-green mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Body Lotion + Body Wash + Oil</span>
-                    </li>
-                    <li className="flex items-center">
-                      <svg className="h-4 w-4 text-brand-green mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>Complete psoriasis management</span>
-                    </li>
-                    <li className="flex items-center">
-                      <svg className="h-4 w-4 text-brand-green mr-2 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>20% OFF regular price</span>
-                    </li>
-                  </ul>
-                </div>
-              </div> */}
               <img src={offer} />
             </div>
             

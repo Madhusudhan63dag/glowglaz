@@ -142,11 +142,7 @@ const Hero = () => {
           <p className={`${currentBanner.styles.subtextColor} mb-2 md:mb-8 transition-all duration-500 leading-[1.2] sm:leading-[1.2] md:leading-[1.3] lg:leading-[1.4] text-wrap text-sm sm:text-base md:text-2xl lg:text-[3rem] line-clamp-3 sm:line-clamp-none`}>
             {currentBanner.subtext}
           </p>
-          <div className={getTextAlignmentClass(currentBanner.styles.textAlign)}>
-            <button className={`px-3 py-1 md:px-8 md:py-3 ${currentBanner.styles.buttonColor} text-white text-xs md:text-base rounded-full transition-all duration-300`}>
-              {currentBanner.buttonText}
-            </button>
-          </div>
+         
         </div>
       </div>
 

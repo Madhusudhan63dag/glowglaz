@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000';//https://razorpaybackend-wgbh.onrender.com 
+const API_URL = 'https://razorpaybackend-wgbh.onrender.com';//https://razorpaybackend-wgbh.onrender.com  http://localhost:5000 
 
 const paymentImages = {
   razorpay: "https://cdn.razorpay.com/static/assets/logo/razorpay-logo.svg",
@@ -505,6 +505,36 @@ const Checkout = () => {
                     <span>Subtotal</span>
                     <span>₹{subtotal.toFixed(2)}</span>
                   </div>
+                  
+                  {/* Special Bundle Offer - only show for 3+ products */}
+                  {cartItems.length >= 3 ? (
+                    <div className="mt-4 mb-4 p-3 bg-green-50 border border-green-100 rounded-lg">
+                      <div className="text-center mb-2">
+                        <span className="inline-block px-3 py-1 bg-brand-green text-white text-xs font-semibold rounded-full">
+                          SPECIAL BUNDLE OFFER
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-gray-600">
+                        <span>Regular Price:</span>
+                        <span className="line-through">₹4,497</span>
+                      </div>
+                      <div className="flex justify-between font-medium text-green-700">
+                        <span>Bundle Price:</span>
+                        <span>₹3,599</span>
+                      </div>
+                      <div className="flex justify-between text-brand-green font-bold">
+                        <span>You Save:</span>
+                        <span>₹898</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="mt-4 mb-4 p-3 bg-gray-50 border border-gray-100 rounded-lg">
+                      <p className="text-center text-sm text-gray-600">
+                        Add one more item to qualify for our special bundle offer!
+                      </p>
+                    </div>
+                  )}
+                  
                   <div className="flex justify-between font-bold text-gray-800 pt-2 border-t border-gray-100">
                     <span>Total</span>
                     <span>₹{total.toFixed(2)}</span>
