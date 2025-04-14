@@ -106,7 +106,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="relative h-[23vh] sm:h-[40vh] md:h-[65vh] lg:h-[75vh] xl:h-[80vh] w-full overflow-hidden">
+    <div className="relative h-[23vh] sm:h-[40vh] md:h-[65vh] lg:h-[90vh] xl:h-[100vh] w-full overflow-hidden">
       {/* Image slider */}
       {banners.map((banner, index) => (
         <div 
