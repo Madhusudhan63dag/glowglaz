@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://razorpaybackend-wgbh.onrender.com';//https://razorpaybackend-wgbh.onrender.com  http://localhost:5000 
 
@@ -10,7 +11,6 @@ const paymentImages = {
   visa: "https://cdn.worldvectorlogo.com/logos/visa.svg",
   mastercard: "https://cdn.worldvectorlogo.com/logos/mastercard-2.svg",
   amex: "https://cdn.worldvectorlogo.com/logos/american-express-1.svg",
-  // Add new trust badge images
   ssl: "https://cdn.worldvectorlogo.com/logos/ssl-secure.svg",
   secure: "https://cdn.worldvectorlogo.com/logos/secure-payment.svg",
   moneyback: "https://cdn.worldvectorlogo.com/logos/money-back-guarantee.svg",
@@ -18,22 +18,11 @@ const paymentImages = {
 };
 
 const Checkout = () => {
-  // Toast notification state
   const [toast, setToast] = useState(null);
-  
-  // Payment method state
   const [paymentMethod, setPaymentMethod] = useState('razorpay');
-  
-  // Loading state
   const [isLoading, setIsLoading] = useState(false);
-  
-  // Order ID for tracking
   const [orderId, setOrderId] = useState(null);
-  
-  // Get cart data from context
   const { cartItems, updateQuantity, removeItem, cartTotal, clearCart } = useCart();
-
-  // Form data state
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -48,37 +37,30 @@ const Checkout = () => {
     cvv: '',
   });
 
-  // Calculate cart totals - removing shipping and GST charges
   const subtotal = cartTotal;
-  const total = subtotal; // Total is now equal to subtotal
+  const total = subtotal;
 
-  // Initialize Razorpay when component mounts
+  const navigate = useNavigate();
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
     document.body.appendChild(script);
-    
     return () => {
       document.body.removeChild(script);
     };
   }, []);
 
-  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Create Razorpay order
   const createRazorpayOrder = async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-      
-      // Generate a receipt ID
       const receipt = `receipt_${Date.now()}`;
-      
-      // Create order on the server
       const response = await axios.post(`${API_URL}/create-order`, {
         amount: total,
         currency: 'INR',
@@ -89,11 +71,11 @@ const Checkout = () => {
           customerPhone: formData.phone
         }
       });
-      
+
       if (!response.data.success) {
         throw new Error('Failed to create order');
       }
-      
+
       return response.data;
     } catch (error) {
       console.error('Error creating Razorpay order:', error);
@@ -108,11 +90,10 @@ const Checkout = () => {
     }
   };
 
-  // Open Razorpay payment modal
   const openRazorpayModal = (orderData) => {
     const options = {
       key: orderData.key,
-      amount: orderData.order.amount, // Amount in paise
+      amount: orderData.order.amount,
       currency: "INR",
       name: "PSORIGO",
       description: "Psoriasis Care Products",
@@ -140,42 +121,45 @@ const Checkout = () => {
     razorpayInstance.open();
   };
 
-  // Handle successful payment
   const handlePaymentSuccess = async (paymentResponse) => {
     try {
       setIsLoading(true);
-      
-      // Verify payment on the server
+
       const verificationResponse = await axios.post(`${API_URL}/verify-payment`, {
         razorpay_order_id: paymentResponse.razorpay_order_id,
         razorpay_payment_id: paymentResponse.razorpay_payment_id,
         razorpay_signature: paymentResponse.razorpay_signature
       });
-      
+
       if (!verificationResponse.data.success) {
         throw new Error('Payment verification failed');
       }
-      
-      // Set order ID for reference BEFORE sending email
+
       const currentOrderId = paymentResponse.razorpay_order_id;
       setOrderId(currentOrderId);
-      
-      // Send order confirmation email with current order ID
+
       await sendOrderConfirmationEmail(paymentResponse.razorpay_payment_id, currentOrderId);
-      
-      // Show success message
+
       setToast({
         title: "Payment Successful!",
         description: "Your order has been placed and payment has been received.",
         type: "success"
       });
-      
-      // Clear cart after successful payment
+
       clearCart();
-      
-      // Reset form
       resetForm();
-      
+
+      navigate('/thank-you', {
+        state: {
+          orderDetails: {
+            id: currentOrderId,
+            date: new Date().toLocaleDateString('en-IN'),
+            email: formData.email,
+            paymentId: paymentResponse.razorpay_payment_id
+          }
+        }
+      });
+
     } catch (error) {
       console.error('Error processing payment:', error);
       setToast({
@@ -188,10 +172,8 @@ const Checkout = () => {
     }
   };
 
-  // Send order confirmation email
   const sendOrderConfirmationEmail = async (paymentId, currentOrderId) => {
     try {
-      // Use the provided order ID or generate one if not available
       const orderDetails = {
         orderNumber: currentOrderId || orderId || `ORD-${Date.now()}`,
         productName: cartItems.map(item => item.name).join(', '),
@@ -201,51 +183,36 @@ const Checkout = () => {
         paymentMethod: paymentMethod === 'razorpay' ? 'Razorpay' : 'Cash on Delivery',
         paymentId: paymentId || 'COD'
       };
-      
-      // Format the address to include all details - since backend template has limited fields
-      // Combine address components into a single string to ensure all details appear in email
+
       const formattedAddress = `${formData.address}${formData.address ? ', ' : ''}${formData.city ? formData.city : ''}${formData.state ? ', ' + formData.state : ''}${formData.zip ? ' - ' + formData.zip : ''}`;
-      
+
       const customerDetails = {
         firstName: formData.name.split(' ')[0] || '',
         lastName: formData.name.split(' ').slice(1).join(' ') || '',
         email: formData.email,
         phone: formData.phone,
-        // Put all address details in the main address field since that's what shows in email
         address: formattedAddress,
-        // Keep apartment empty since we've included everything in address
         apartment: '',
-        // Keep these fields for backend compatibility
         city: formData.city,
         state: formData.state,
         country: 'India',
         zip: formData.zip
       };
-      
-      console.log('Sending order confirmation with details:', {
+
+      await axios.post(`${API_URL}/send-order-confirmation`, {
         customerEmail: formData.email,
         orderDetails,
         customerDetails
       });
-      
-      const response = await axios.post(`${API_URL}/send-order-confirmation`, {
-        customerEmail: formData.email,
-        orderDetails,
-        customerDetails
-      });
-      
-      console.log('Email API response:', response.data);
-      
     } catch (error) {
       console.error('Error sending order confirmation email:', error);
     }
   };
 
-  // Send abandoned order email
   const sendAbandonedOrderEmail = async () => {
     try {
-      if (!formData.email) return; // Skip if no email provided
-      
+      if (!formData.email) return;
+
       const orderDetails = {
         orderNumber: `ABANDONED-${Date.now()}`,
         productName: cartItems.map(item => item.name).join(', '),
@@ -253,7 +220,7 @@ const Checkout = () => {
         totalAmount: total.toFixed(2),
         currency: 'INR'
       };
-      
+
       const customerDetails = {
         firstName: formData.name.split(' ')[0] || 'Customer',
         lastName: formData.name.split(' ').slice(1).join(' ') || '',
@@ -265,19 +232,17 @@ const Checkout = () => {
         country: 'India',
         zip: formData.zip || ''
       };
-      
+
       await axios.post(`${API_URL}/send-abandoned-order-email`, {
         customerEmail: formData.email,
         orderDetails,
         customerDetails
       });
-      
     } catch (error) {
       console.error('Error sending abandoned order email:', error);
     }
   };
 
-  // Reset form fields
   const resetForm = () => {
     setFormData({
       name: '',
@@ -294,31 +259,35 @@ const Checkout = () => {
     });
   };
 
-  // Process COD order
   const processCashOnDelivery = async () => {
     try {
       setIsLoading(true);
-      
-      // Generate an order ID for COD
+
       const codOrderId = `COD-${Date.now()}`;
       setOrderId(codOrderId);
-      
-      // Send order confirmation email with the generated order ID
+
       await sendOrderConfirmationEmail(null, codOrderId);
-      
-      // Show success message
+
       setToast({
         title: "Order Placed Successfully!",
         description: "Your order will be delivered and payment will be collected on delivery.",
         type: "success"
       });
-      
-      // Clear cart after successful order
+
       clearCart();
-      
-      // Reset form
       resetForm();
-      
+
+      navigate('/thank-you', {
+        state: {
+          orderDetails: {
+            id: codOrderId,
+            date: new Date().toLocaleDateString('en-IN'),
+            email: formData.email,
+            paymentMethod: 'Cash on Delivery'
+          }
+        }
+      });
+
     } catch (error) {
       console.error('Error processing COD order:', error);
       setToast({
@@ -331,11 +300,9 @@ const Checkout = () => {
     }
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Validate cart is not empty
+
     if (cartItems.length === 0) {
       setToast({
         title: "Empty Cart",
@@ -344,19 +311,16 @@ const Checkout = () => {
       });
       return;
     }
-    
+
     try {
       if (paymentMethod === 'razorpay') {
-        // Process payment with Razorpay
         const orderData = await createRazorpayOrder();
         if (orderData) {
           openRazorpayModal(orderData);
         }
       } else if (paymentMethod === 'cod') {
-        // Process Cash on Delivery order
         await processCashOnDelivery();
       }
-      
     } catch (error) {
       console.error('Error during checkout:', error);
       setToast({
@@ -367,7 +331,6 @@ const Checkout = () => {
     }
   };
 
-  // Auto-dismiss toast after 5 seconds
   useEffect(() => {
     if (toast) {
       const timer = setTimeout(() => setToast(null), 5000);
@@ -379,9 +342,7 @@ const Checkout = () => {
     <section id="checkout" className="py-20 bg-gradient-to-b from-gray-50 to-white">
       {/* Toast Notification */}
       {toast && (
-        <div className={`fixed top-4 right-4 bg-white shadow-lg rounded-lg p-4 max-w-sm z-50 border-l-4 ${
-          toast.type === 'error' ? 'border-red-500' : 'border-brand-green'
-        } animate-fade-in`}>
+        <div className={`fixed top-4 right-4 bg-white shadow-lg rounded-lg p-4 max-w-sm z-50 border-l-4 ${toast.type === 'error' ? 'border-red-500' : 'border-brand-green'} animate-fade-in`}>
           <div className="flex">
             <div className="flex-shrink-0">
               <svg className={`h-5 w-5 ${toast.type === 'error' ? 'text-red-500' : 'text-brand-green'}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -443,7 +404,7 @@ const Checkout = () => {
               <div className="text-center py-8">
                 <p className="text-gray-600">Your cart is empty</p>
                 <a 
-                  href="#products" 
+                  href="#products"  
                   className="mt-4 inline-block px-6 py-2 bg-gradient-to-r from-brand-green to-bluegray text-white rounded-lg hover:from-brand-green hover:to-bluegray-light transition-all"
                 >
                   Browse Products
@@ -544,7 +505,7 @@ const Checkout = () => {
                 {/* Promo Code */}
                 <div className="flex gap-2 mb-4">
                   <input 
-                    type="text"
+                    type="text" 
                     placeholder="Promo code" 
                     className="w-full flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />

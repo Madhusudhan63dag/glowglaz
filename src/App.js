@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Shipping from './pages/Shipping';
+import Thank from './pages/Thank';
 import ScrollToTop from './components/ScrollToTop';
 import { CartProvider } from './context/CartContext';
 import Usage from './components/Usage';
@@ -97,6 +98,9 @@ function App() {
             
             {/* Shipping Policy Route */}
             <Route path="/shipping" element={<Shipping />} />
+            
+            {/* Thank You Page Route */}
+            <Route path="/thank-you" element={<Thank />} />
           </Routes>
           
           <Footer />
